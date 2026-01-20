@@ -1,8 +1,9 @@
-class Celsius(temp : Double) : Temperature(currentTemp = temp) {
+class Celsius(private var currentTemp: Double) : Temperature(currentTemp) {
 
     // celsius = kelvin - 273.15
-//    override fun getTemperature(temp): Double{
-//        return temp
-//    }
+
+    override fun getTemperature(): Double {
+        return super.getTemperature() - 273.15
+    }
 
 }
