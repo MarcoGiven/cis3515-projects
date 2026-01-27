@@ -29,7 +29,21 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.textView)
         checkBox = findViewById(R.id.checkBox)
 
-        
+
+
+
+        decreaseButton.setOnClickListener {
+            if (checkBox.isChecked){
+                textView.textSize -= 1f
+            }
+        }
+
+        increaseButton.setOnClickListener {
+            if (checkBox.isChecked){
+                textView.textSize += 1f
+            }
+        }
+
     }
 
 
