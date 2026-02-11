@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         spinner.adapter = adapter
 
 
-        
+        save.setOnClickListener {
+            
+        }
 
     }
 }
