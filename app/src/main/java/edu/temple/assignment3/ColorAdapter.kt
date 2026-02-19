@@ -20,14 +20,16 @@ class ColorAdapter(private val context: Context, private val colorArray: Array<S
         return p0.toLong()
     }
 
-    override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View? {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
         val textView = TextView(context)
 
 
-        textView.text = colorArray[p0]
+        textView.text = colorArray[position]
 
         textView.setPadding(32, 32, 32, 32)
         textView.textSize = 18f
+
+        textView.setBackgroundColor(Color.WHITE)
 
         return textView
     }
