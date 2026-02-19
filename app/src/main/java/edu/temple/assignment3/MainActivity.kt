@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val myLayout = findViewById<View>(R.id.main)
 
 
-        val colorArray = arrayOf("Select a Color", "RED", "BLUE", "GREEN")
+        val colorArray = arrayOf("Select a Color", "RED", "MAROON", "MAGENTA", "PURPLE", "BLUE", "NAVY", "AQUA", "TEAL", "GREEN", "OLIVE", "YELLOW", "LIGHTGRAY", "SILVER", "GRAY", "DARKGRAY")
         spinner.adapter = ColorAdapter(this, colorArray)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
