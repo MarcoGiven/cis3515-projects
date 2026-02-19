@@ -25,7 +25,7 @@ class ColorAdapter(private val context: Context, private val colorArray: Array<S
 
 
         textView.text = colorArray[p0]
-        
+
         textView.setPadding(32, 32, 32, 32)
         textView.textSize = 18f
 
