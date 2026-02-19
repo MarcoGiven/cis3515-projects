@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         val spinner = findViewById<Spinner>(R.id.spinner)
 
-        val colorArray = arrayOf("RED", "BLUE", "GREEN")
+        val colorArray = arrayOf("Select a Color", "RED", "BLUE", "GREEN")
         spinner.adapter = ColorAdapter(this, colorArray)
     }
 }
