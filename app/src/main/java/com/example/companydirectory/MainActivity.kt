@@ -1,6 +1,8 @@
 package com.example.companydirectory
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
@@ -39,5 +41,17 @@ class MainActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         nameSpinner.adapter = adapter
 
+        nameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val selectedEmployee = employees[p2]
+                displayEmployee(selectedEmployee)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
+    }
+
+    private fun displayEmployee(selectedEmployee: Employee) {
+        employeeNameTextView.text = selectedEmployee.name
     }
 }
