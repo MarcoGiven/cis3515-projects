@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var employeeTelephoneTextView: TextView
     lateinit var employeeProfilePictureImageView: ImageView
     lateinit var directReportRecyclerView: RecyclerView
-    lateinit var nameSpinner: Spinner
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,16 +32,16 @@ class MainActivity : AppCompatActivity() {
         employeeTelephoneTextView = findViewById(R.id.telephoneTextView)
         employeeProfilePictureImageView = findViewById(R.id.profileImageView)
         directReportRecyclerView = findViewById(R.id.reportsRecyclerView)
-        nameSpinner = findViewById(R.id.nameSpinner)
+
 
         // This returns employee data
         val employees = getEmployees()
         val names = employees.map { it.name }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        nameSpinner.adapter = adapter
+        employeeListSpinner.adapter = adapter
 
-        nameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        employeeListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 val selectedEmployee = employees[p2]
                 displayEmployee(selectedEmployee)
@@ -53,5 +53,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayEmployee(selectedEmployee: Employee) {
         employeeNameTextView.text = selectedEmployee.name
+        employeeDepartmentTextView.text = selectedEmployee.department
+        employeeEmailTextView.text = selectedEmployee.email
+        employeeTelephoneTextView.text = selectedEmployee.phone
+        employeeProfilePictureImageView.setImageResource(selectedEmployee.profileId)
     }
 }
