@@ -1,6 +1,7 @@
 package com.example.companydirectory
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var employeeTelephoneTextView: TextView
     lateinit var employeeProfilePictureImageView: ImageView
     lateinit var directReportRecyclerView: RecyclerView
+    lateinit var nameSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +30,14 @@ class MainActivity : AppCompatActivity() {
         employeeTelephoneTextView = findViewById(R.id.telephoneTextView)
         employeeProfilePictureImageView = findViewById(R.id.profileImageView)
         directReportRecyclerView = findViewById(R.id.reportsRecyclerView)
+        nameSpinner = findViewById(R.id.nameSpinner)
 
         // This returns employee data
         val employees = getEmployees()
+        val names = employees.map { it.name }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        nameSpinner.adapter = adapter
 
     }
 }
