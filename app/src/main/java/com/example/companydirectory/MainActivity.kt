@@ -64,7 +64,12 @@ class MainActivity : AppCompatActivity() {
         employeeTelephoneTextView.text = selectedEmployee.phone
         employeeProfilePictureImageView.setImageResource(selectedEmployee.profileId)
         val reports = selectedEmployee.directReports
-        directReportRecyclerView.adapter = DirectReportAdapter(reports)
+
+        if(reports.isEmpty()){
+            directReportRecyclerView.adapter = DirectReportAdapter(listOf("No Direct Reports"))
+        } else {
+            directReportRecyclerView.adapter = DirectReportAdapter(reports)
+        }
     }
 }
 
