@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var employeeTelephoneTextView: TextView
     lateinit var employeeProfilePictureImageView: ImageView
     lateinit var directReportRecyclerView: RecyclerView
+    lateinit var employees: List<Employee>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // This returns employee data
-        val employees = getEmployees()
+        employees = getEmployees()
         val names = employees.map { it.name }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -66,14 +67,19 @@ class MainActivity : AppCompatActivity() {
         val reports = selectedEmployee.directReports
 
         if(reports.isEmpty()){
-            directReportRecyclerView.adapter = DirectReportAdapter(listOf("No Direct Reports"))
+            directReportRecyclerView.adapter = DirectReportAdapter(listOf("No Direct Reports")) { }
         } else {
-            directReportRecyclerView.adapter = DirectReportAdapter(reports)
+            directReportRecyclerView.adapter = DirectReportAdapter(reports) { clickedName ->
+                val clicked = employees.find { it.name == clickedName }
+                if (clicked != null){
+                    displayEmployee(clicked)
+                }
+            }
         }
     }
 }
 
-class DirectReportAdapter(private val reports: List<String>) : RecyclerView.Adapter<DirectReportAdapter.ViewHolder>() {
+class DirectReportAdapter(private val reports: List<String>, private val onItemClicked: (String) -> Unit) : RecyclerView.Adapter<DirectReportAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
@@ -89,6 +95,13 @@ class DirectReportAdapter(private val reports: List<String>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: DirectReportAdapter.ViewHolder, position: Int) {
         holder.textView.text = reports[position]
+
+        holder.itemView.setOnClickListener {
+            if(reports[position] == "No Direct Reports") {
+                return@setOnClickListener
+            }
+            onItemClicked(reports[position])
+        }
     }
 
     override fun getItemCount(): Int {
