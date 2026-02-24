@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -42,11 +43,14 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, names)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         employeeListSpinner.adapter = adapter
+        directReportRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+
 
         employeeListSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 val selectedEmployee = employees[p2]
                 displayEmployee(selectedEmployee)
+
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -59,11 +63,12 @@ class MainActivity : AppCompatActivity() {
         employeeEmailTextView.text = selectedEmployee.email
         employeeTelephoneTextView.text = selectedEmployee.phone
         employeeProfilePictureImageView.setImageResource(selectedEmployee.profileId)
-
+        val reports = selectedEmployee.directReports
+        directReportRecyclerView.adapter = DirectReportAdapter(reports)
     }
 }
 
-class DirectReportAdapter(private val reports: Array<String>) : RecyclerView.Adapter<DirectReportAdapter.ViewHolder>() {
+class DirectReportAdapter(private val reports: List<String>) : RecyclerView.Adapter<DirectReportAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
