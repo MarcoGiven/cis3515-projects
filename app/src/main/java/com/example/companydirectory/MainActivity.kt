@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
                 val clicked = employees.find { it.name == clickedName }
                 if (clicked != null){
                     displayEmployee(clicked)
+                    val index = employees.indexOf(clicked)
+                    employeeListSpinner.setSelection(index)
                 }
             }
         }
