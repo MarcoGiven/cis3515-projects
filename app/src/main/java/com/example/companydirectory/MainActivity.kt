@@ -1,7 +1,9 @@
 package com.example.companydirectory
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -57,5 +59,30 @@ class MainActivity : AppCompatActivity() {
         employeeEmailTextView.text = selectedEmployee.email
         employeeTelephoneTextView.text = selectedEmployee.phone
         employeeProfilePictureImageView.setImageResource(selectedEmployee.profileId)
+
     }
+}
+
+class DirectReportAdapter(private val reports: Array<String>) : RecyclerView.Adapter<DirectReportAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textView: TextView
+        init {
+            textView = view.findViewById(android.R.id.text1)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DirectReportAdapter.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(android.R.layout.simple_list_item_1, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: DirectReportAdapter.ViewHolder, position: Int) {
+        holder.textView.text = reports[position]
+    }
+
+    override fun getItemCount(): Int {
+        return reports.size
+    }
+
 }
