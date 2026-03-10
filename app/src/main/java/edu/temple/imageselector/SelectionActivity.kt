@@ -1,26 +1,35 @@
 package edu.temple.imageselector
 
+import android.content.Intent
+import android.graphics.Movie
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 data class MovieItem(val title: String, val imageId: Int)
 
 class SelectionActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var movieRecyclerView: RecyclerView
     private lateinit var movieList: List<MovieItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById(R.id.photo_recycler)
+        movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        movieRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
         movieList = listOf(
-            MovieItem(getstring(R.string.movie1), R.drawable.anemone_poster),
+            MovieItem(getString(R.string.movie1), R.drawable.anemone_poster),
             MovieItem(getString(R.string.movie2), R.drawable.phantom_poster),
             MovieItem(getString(R.string.movie3), R.drawable.lincoln_poster),
             MovieItem(getString(R.string.movie4), R.drawable.nine_poster),
@@ -44,4 +53,24 @@ class SelectionActivity : AppCompatActivity() {
 
 
     }
+}
+
+class MovieAdapter(private val movies: List<MovieItem>, private val onItemClicked: (MovieItem) -> Unit) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // TODO
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ViewHolder {
+        // TODO
+    }
+
+    override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
+
+    }
+
+    override fun getItemCount(): Int {
+        return movies.size
+    }
+
 }
