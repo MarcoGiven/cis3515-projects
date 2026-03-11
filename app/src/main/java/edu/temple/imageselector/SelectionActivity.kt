@@ -49,10 +49,11 @@ class SelectionActivity : AppCompatActivity() {
             MovieItem(getString(R.string.movie20), R.drawable.brother_poster),
         )
 
-        val movieAdapter = MovieAdapter(movieList)
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
         movieRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        movieRecyclerView.adapter = movieAdapter
+        movieRecyclerView.adapter = MovieAdapter(movieList) { selectedMovie ->
+
+        }
 
     }
 }
@@ -60,15 +61,22 @@ class SelectionActivity : AppCompatActivity() {
 class MovieAdapter(private val movies: List<MovieItem>, private val onItemClicked: (MovieItem) -> Unit) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // TODO
+        val movieImageView: ImageView = itemView.findViewById(R.id.imageView2)
+        val movieTitleTextView: TextView = itemView.findViewById(R.id.textView2)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ViewHolder {
-        // TODO
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_caption, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val movie = movies[position]
 
+        holder.movieImageView.setImageResource(movie.imageId)
+        holder.movieTitleTextView.text = movie.title
+
+        holder.itemView.setOnClickListener { onItemClicked(movie) }
     }
 
     override fun getItemCount(): Int {
