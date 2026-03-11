@@ -3,6 +3,7 @@ package edu.temple.imageselector
 import android.content.Intent
 import android.graphics.Movie
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,25 +52,39 @@ class SelectionActivity : AppCompatActivity() {
 
         movieRecyclerView = findViewById(R.id.movieRecyclerView)
         movieRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        movieRecyclerView.adapter = MovieAdapter(movieList) { selectedMovie ->
 
+        movieRecyclerView.adapter = MovieAdapter(movieList) { selectedMovie ->
+            // Run onItemClicked parameter function from MovieAdapter
+            val intent = Intent(this, DisplayActivity::class.java)
+
+            // pass information of movie clicked to next activity
+            intent.putExtra("title", selectedMovie.title)
+            intent.putExtra("imageId", selectedMovie.imageId)
+            startActivity(intent)
+            Log.d("TEST", "Starting activity with Intent: $intent")
         }
 
     }
 }
 
+// private val onitem... is function parameter that runs when movie is clicked
 class MovieAdapter(private val movies: List<MovieItem>, private val onItemClicked: (MovieItem) -> Unit) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
+    // defines viewholder -- one instance in grid (image/title)
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        // ImageView inside ITEM_IMAGE_CAPTION.XML layout file
         val movieImageView: ImageView = itemView.findViewById(R.id.imageView2)
+        // TextView inside layout file
         val movieTitleTextView: TextView = itemView.findViewById(R.id.textView2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_caption, parent, false)
+        // returns an instance of a viewholder object containing that layout
         return ViewHolder(view)
     }
 
+    // called to fill grid item with data for that instance
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
 
