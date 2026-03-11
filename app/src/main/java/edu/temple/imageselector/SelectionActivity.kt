@@ -25,8 +25,6 @@ class SelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        movieRecyclerView = findViewById(R.id.movieRecyclerView)
-        movieRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
         movieList = listOf(
             MovieItem(getString(R.string.movie1), R.drawable.anemone_poster),
@@ -51,6 +49,10 @@ class SelectionActivity : AppCompatActivity() {
             MovieItem(getString(R.string.movie20), R.drawable.brother_poster),
         )
 
+        val movieAdapter = MovieAdapter(movieList)
+        movieRecyclerView = findViewById(R.id.movieRecyclerView)
+        movieRecyclerView.layoutManager = GridLayoutManager(this, 3)
+        movieRecyclerView.adapter = movieAdapter
 
     }
 }
