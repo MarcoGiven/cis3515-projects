@@ -1,6 +1,8 @@
 package edu.temple.imageselector
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Selection
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +21,12 @@ class DisplayActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.imageView)
         val button = findViewById<Button>(R.id.closeButton)
 
+        textView.text = intent.getStringExtra("title")
+        imageView.setImageResource(intent.getIntExtra("imageId", 0))
 
+        button.setOnClickListener {
+            val intent = Intent(this, SelectionActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
