@@ -13,7 +13,7 @@ class DisplayActivity : AppCompatActivity() {
 
         // Set the title for the activity.
         // This can also be done in the manifest
-        supportActionBar?.title = "Display-er"
+        supportActionBar?.title = resources.getString(R.string.Heading2)
 
         val imageView = findViewById<ImageView>(R.id.imageView)
         val textView = findViewById<TextView>(R.id.textView)

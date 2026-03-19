@@ -24,7 +24,7 @@ class SelectionActivity : AppCompatActivity() {
         // Set the title for the activity.
         // This is done to ensure that the activity label
         // displayed in the Android launcher is different
-        supportActionBar?.title = "Selector"
+        supportActionBar?.title = resources.getString(R.string.Heading1)
 
         val flavors = resources.getStringArray(R.array.flavor_array)
         val items = generateTestData(flavors)

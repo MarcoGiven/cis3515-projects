@@ -14,10 +14,9 @@
         <item>Coconut Cream Pie</item>
         <item>Salted Caramel</item>
     </string-array>
-    <string-array name="headers">
-        <item>Display-er</item>
-        <item>Selector</item>
-    </string-array>
+
+    <string name="Heading1">Selector</string>
+    <string name="Heading2">Display-er</string>
 
 </resources>
 
