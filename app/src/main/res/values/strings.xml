@@ -17,6 +17,8 @@
 
     <string name="Heading1">Selector</string>
     <string name="Heading2">Display-er</string>
+    <string name="backBtn">&lt; BACK</string>
+    <string name="textView">TextView</string>
 
 </resources>
 

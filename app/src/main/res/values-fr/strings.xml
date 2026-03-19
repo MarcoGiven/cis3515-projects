@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dessert App</string>
+    <string-array name="flavor_array">
+        <item>Original</item>
+        <item>Fraise fraîche</item>
+        <item>Cheesecake chocolat-caramel</item>
+        <item>Ananas renversé</item>
+        <item>Célébration</item>
+        <item>Pomme au caramel</item>
+        <item>Cerise et chocolat Ghirardelli®</item>
+        <item>Léger</item>
+        <item>Spirale à la cannelle Cinnabon®</item>
+        <item>Chocolat Godiva®</item>
+        <item>Tarte à la crème de coco</item>
+        <item>Caramel au beurre salé</item>
+    </string-array>
+
+    <string name="Heading1">Sélecteur</string>
+    <string name="Heading2">Sélecteur</string>
+    <string name="backBtn">&lt; RETOUR</string>
+    <string name="textView">TextView</string>
+
+</resources>
