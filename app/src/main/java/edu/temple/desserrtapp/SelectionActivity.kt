@@ -26,11 +26,11 @@ class SelectionActivity : AppCompatActivity() {
         // displayed in the Android launcher is different
         supportActionBar?.title = "Selector"
 
-        val items = generateTestData()
+        val flavors = resources.getStringArray(R.array.flavor_array)
+        val items = generateTestData(flavors)
+
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-
-
         recyclerView.layoutManager = GridLayoutManager(this, 3)
 
         val clickEvent = {item: Item ->
@@ -48,18 +48,19 @@ class SelectionActivity : AppCompatActivity() {
     /**
      * Generate test info for app
      */
-    fun generateTestData(): Array<Item> {
-        return arrayOf(Item(R.drawable.ccf_original, "Original")
-            , Item(R.drawable.ccf_freshstrawberry,"Fresh Strawberry")
-            , Item(R.drawable.ccf_chocolatecaramelicious,"Chocolate Caramelicious Cheesecake ")
-            , Item(R.drawable.ccf_pineappleupsidedown,"Pineapple Upside-Down")
-            , Item(R.drawable.ccf_celebration,"Celebration")
-            , Item(R.drawable.ccf_caramelapple,"Caramel Apple")
-            , Item(R.drawable.ccf_verycherryghirardellichocolate,"Very Cherry Ghirardelli® Chocolate")
-            , Item(R.drawable.ccf_lowlicious,"Low-Licious")
-            , Item(R.drawable.ccf_cinnaboncinnamoncwirl,"Cinnabon® Cinnamon Swirl")
-            , Item(R.drawable.ccf_godiva,"Godiva® Chocolate")
-            , Item(R.drawable.ccf_coconutcreampie,"Coconut Cream Pie")
-            , Item(R.drawable.ccf_saltedcaramel,"Salted Caramel"))
+
+    fun generateTestData(flavors: Array<String>): Array<Item> {
+        return arrayOf(Item(R.drawable.ccf_original, flavors[0])
+            , Item(R.drawable.ccf_freshstrawberry, flavors[1])
+            , Item(R.drawable.ccf_chocolatecaramelicious,flavors[2])
+            , Item(R.drawable.ccf_pineappleupsidedown,flavors[3])
+            , Item(R.drawable.ccf_celebration,flavors[4])
+            , Item(R.drawable.ccf_caramelapple,flavors[5])
+            , Item(R.drawable.ccf_verycherryghirardellichocolate,flavors[6])
+            , Item(R.drawable.ccf_lowlicious,flavors[7])
+            , Item(R.drawable.ccf_cinnaboncinnamoncwirl,flavors[8])
+            , Item(R.drawable.ccf_godiva,flavors[9])
+            , Item(R.drawable.ccf_coconutcreampie,flavors[10])
+            , Item(R.drawable.ccf_saltedcaramel,flavors[11]))
     }
 }
