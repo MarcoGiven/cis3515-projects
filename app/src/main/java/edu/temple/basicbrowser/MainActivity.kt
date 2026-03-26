@@ -2,6 +2,7 @@ package edu.temple.basicbrowser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         goButton = findViewById(R.id.goButton)
         webView = findViewById(R.id.webView)
 
+        webView.settings.javaScriptEnabled = true
 
         goButton.setOnClickListener {
             var url = urlEditText.text.toString()
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             if(url.isNotEmpty()) {
                 if(!url.startsWith("http://") && !url.startsWith("https://")) {
                     url = "https://$url"
+                    urlEditText.setText(url)
                 }
                 webView.loadUrl(url)
             }
