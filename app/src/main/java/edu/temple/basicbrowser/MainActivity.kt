@@ -2,7 +2,6 @@ package edu.temple.basicbrowser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -24,26 +23,24 @@ class MainActivity : AppCompatActivity() {
 
         webView.settings.javaScriptEnabled = true
 
-        goButton.setOnClickListener {
-            var url = urlEditText.text.toString()
 
-            if(url.isNotEmpty()) {
-                if(!url.startsWith("http://") && !url.startsWith("https://")) {
-                    url = "https://$url"
-                    urlEditText.setText(url)
-                }
-                webView.loadUrl(url)
-            }
-
-
-        }
 
         // Allow your browser to intercept hyperlink clicks
         webView.webViewClient = object: WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+
+                url?.run {
+                    urlEditText.setText(this)
+                }
             }
         }
 
+        goButton.setOnClickListener {
+            webView.loadUrl(fixURL(urlEditText.text.toString()))
+
+        }
     }
+
+    fun fixURL(url: String) = if(url.startsWith("http")) url else "https://$url"
 }
