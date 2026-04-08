@@ -1,6 +1,10 @@
 package edu.temple.cis3515_startingservices
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,10 +15,31 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+
+
+        val inputTextNumber = findViewById<EditText>(R.id.editTextNumber)
+        val startButton = findViewById<Button>(R.id.button)
+
+
+        startButton.setOnClickListener {
+            val startValue = inputTextNumber.text.toString().trim().toIntOrNull()
+
+            if(startValue == null || startValue < 0){
+                Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            val intent = Intent(this, CountdownService::class.java).apply {
+                putExtra(CountdownService, START_VALUE, startValue)
+            }
+
+            startService(intent)
+
+
         }
+
+
+
     }
 }
