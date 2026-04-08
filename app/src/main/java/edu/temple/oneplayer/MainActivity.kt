@@ -1,10 +1,13 @@
 package edu.temple.oneplayer
 
 import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
+import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -98,6 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent){
         super.onNewIntent(intent)
+        setIntent(intent)
         handleIntent(intent)
     }
 
@@ -136,6 +140,17 @@ class MainActivity : AppCompatActivity() {
         val id = obj.getInt("book_id")
         val coverURI = obj.getString("cover_uri")
         return Book(title, author, id, coverURI)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        val searchItem = menu?.findItem(R.id.search)
+        val searchView = searchItem?.actionView as SearchView
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        return true
     }
 
 }
