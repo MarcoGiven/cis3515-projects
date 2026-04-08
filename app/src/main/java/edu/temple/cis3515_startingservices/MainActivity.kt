@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import edu.temple.cis3515_startingservices.CountdownService.Companion.START_VALUE
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val intent = Intent(this, CountdownService::class.java).apply {
-                putExtra(CountdownService, START_VALUE, startValue)
+                putExtra(CountdownService.START_VALUE, startValue)
             }
 
             startService(intent)
