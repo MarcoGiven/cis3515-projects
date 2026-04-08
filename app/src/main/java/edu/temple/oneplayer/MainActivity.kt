@@ -1,11 +1,18 @@
 package edu.temple.oneplayer
 
+import android.app.SearchManager
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     lateinit var backPressCallback: OnBackPressedCallback
@@ -39,7 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, backPressCallback)
 
-        bookViewModel.setBookList(getBookList())
+        // for getting at startup
+        getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php")
 
         // If we're switching from one container to two containers
         // clear BookPlayerFragment from container1
@@ -82,16 +90,52 @@ class MainActivity : AppCompatActivity() {
                 }
                 bookViewModel.markSelectedBookViewed()
             }
+
+        }
+
+        handleIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent){
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent){
+        if(Intent.ACTION_SEARCH == intent.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                searchBooks(query)
+            }
         }
     }
 
-    private fun getBookList() : BookList {
-        val bookList = BookList()
-        // Remove test books
-//        repeat (10) {
-//            bookList.add(Book("Book ${it + 1}", "Author ${10 - it}"))
-//        }
-
-        return bookList
+    private fun searchBooks(query: String) {
+        getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php?query=$query")
     }
+
+    private fun getBooks(url: String) {
+        val newBookList = BookList()
+
+        Volley.newRequestQueue(this).add(
+            JsonArrayRequest(Request.Method.GET, url, null, { response ->
+                    for(i in 0 until response.length()) {
+                        val obj = response.getJSONObject(i)
+                        newBookList.add(parseBook(obj))
+                    }
+                    bookViewModel.setBookList(newBookList)
+                }, { error ->
+                    Log.e("Books", "Fetch Failed: ${error.message}")
+                }
+            )
+        )
+    }
+
+    private fun parseBook(obj: JSONObject): Book {
+        val title = obj.getString("book_title")
+        val author = obj.getString("author_name")
+        val id = obj.getInt("book_id")
+        val coverURI = obj.getString("cover_uri")
+        return Book(title, author, id, coverURI)
+    }
+
 }
