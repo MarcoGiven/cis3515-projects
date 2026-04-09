@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val searchView = findViewById<SearchView>(R.id.searchView)
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        handleIntent(intent)
 
         // Use Back gesture to clear selected book
         backPressCallback = object: OnBackPressedCallback(true) {
@@ -93,11 +98,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 bookViewModel.markSelectedBookViewed()
             }
-
         }
-
-        handleIntent(intent)
     }
+
 
     override fun onNewIntent(intent: Intent){
         super.onNewIntent(intent)
@@ -142,15 +145,5 @@ class MainActivity : AppCompatActivity() {
         return Book(title, author, id, coverURI)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.options_menu, menu)
-
-        val searchItem = menu?.findItem(R.id.search)
-        val searchView = searchItem?.actionView as SearchView
-        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-        return true
-    }
 
 }
