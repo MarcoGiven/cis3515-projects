@@ -108,13 +108,26 @@ class MainActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent){
         if(Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                if(isSingleContainer){
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.container1)
+
+                    if (currentFragment is BookPlayerFragment) {
+                        supportFragmentManager.popBackStack()
+                        bookViewModel.clearSelectedBook()
+                    }
+                }
+
                 searchBooks(query)
             }
         }
     }
 
     private fun searchBooks(query: String) {
-        getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php?query=$query")
+        if (query == "*"){
+            getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php")
+        } else {
+            getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php?query=$query")
+        }
     }
 
     private fun getBooks(url: String) {
