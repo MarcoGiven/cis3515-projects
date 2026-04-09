@@ -54,9 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, backPressCallback)
 
-        // for getting at startup
-        getBooks("https://kamorris.com/lab/audlibplayer/searchbooks.php")
-
         // If we're switching from one container to two containers
         // clear BookPlayerFragment from container1
         if (supportFragmentManager.findFragmentById(R.id.container1) is BookPlayerFragment) {
