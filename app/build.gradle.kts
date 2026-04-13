@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-    implementation(files("libs/audiobookplayer.aar"))
     implementation (libs.picasso)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -44,6 +43,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.volley)
+    implementation(files("libs/audiobookplayer.aar"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
