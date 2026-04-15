@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var timerBinder: TimerService.TimerBinder
     var isConnected = false
     var isRun = false
+    var defaultValue = 100
 
     var timerHandler = Handler(Looper.getMainLooper()) {
         timerTextView.text = it.what.toString()
@@ -45,24 +46,28 @@ class MainActivity : AppCompatActivity() {
 
         timerTextView = findViewById(R.id.textView)
 
-        bindService(
-            Intent(this, TimerService::class.java),
-            serviceConnection,
-            BIND_AUTO_CREATE
-        )
+
 
         val startButton = findViewById<Button>(R.id.startButton)
         startButton.setOnClickListener {
+
+
             if(isConnected) {
                 if(!isRun) {
-                    timerBinder.start(100)
+
+                    val savedValue = timerBinder?.getSavedValue() ?: -1
+                    val startValue = if(savedValue != -1 ) savedValue else defaultValue
+
+                    timerBinder.start(startValue)
                     startButton.text = "Pause"
                     isRun = true
+
                 } else {
                     timerBinder.pause()
                     startButton.text = "Resume"
                     isRun = false
                 }
+
             }
         }
 
@@ -78,8 +83,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        unbindService(serviceConnection)
-        super.onDestroy()
+
+
+    override fun onStart() {
+        super.onStart()
+        bindService(
+            Intent(this, TimerService::class.java),
+            serviceConnection,
+            BIND_AUTO_CREATE
+        )
     }
+
+    override fun onStop() {
+        super.onStop()
+        if(isConnected) {
+            unbindService(serviceConnection)
+        }
+        isConnected = false
+    }
+
+
 }
