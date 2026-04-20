@@ -19,6 +19,8 @@ class BookViewModel : ViewModel() {
     // care about the data it's storing. It's just a means to
     // have an observer be notified that something (new books have been added)
     // has happened
+
+
     private val updatedBookList : MutableLiveData<Int> by lazy {
         MutableLiveData()
     }

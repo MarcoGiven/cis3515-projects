@@ -23,6 +23,12 @@ class BookPlayerFragment : Fragment() {
                 .beginTransaction()
                 .add(R.id.book_fragment_container, BookFragment())
                 .commit()
+
+        if(childFragmentManager.findFragmentById(R.id.book_control_container) == null){
+            childFragmentManager.beginTransaction()
+                .add(R.id.book_control_container, BookControlFragment())
+                .commit()
+        }
     }
 
 
