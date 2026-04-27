@@ -242,6 +242,12 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
     override fun pauseBook() {
         mediaControllerBinder?.run {
             if (isPlaying) {
+                bookViewModel.getPlayingBook()?.value?.let { currentBook ->
+                    getSharedPreferences("playback_positions", MODE_PRIVATE)
+                        .edit()
+                        .putInt("book_${currentBook.book_id}", progress)
+                        .apply()
+                }
                 stopService(bookServiceIntent)
             } else {
                 startService(bookServiceIntent)
