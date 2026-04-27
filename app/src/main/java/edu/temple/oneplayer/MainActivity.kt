@@ -218,6 +218,7 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                         getSharedPreferences("playback_positions", MODE_PRIVATE)
                             .edit()
                             .putInt("book_${currentBook.book_id}", currentProgress)
+                            .putLong("book_${currentBook.book_id}_time", System.currentTimeMillis())
                             .apply()
                     }
                 }
@@ -229,7 +230,24 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                     bookFile = file
                     val savedPosition = getSharedPreferences("playback_positions", MODE_PRIVATE)
                         .getInt("book_${book_id}", 0)
-                    play(this@apply, savedPosition)
+
+                     val savedTime = getSharedPreferences("playback_positions", MODE_PRIVATE)
+                         .getLong("book_${book_id}_time", 0L)
+
+                    val elapsedTime = System.currentTimeMillis() - savedTime
+
+                    val rewind = if (elapsedTime < 60_000L) 5 // 1 minute = 60,000 MS
+                        else if (elapsedTime < 300_000) 15    // 5 minutes = 300,000 MS
+                        else if (elapsedTime < 3_600_000L) 30 // 1 hour = 3,600,000 MS
+                        else 60
+
+                    // so I can test the if statement time changes
+                    Log.d("Playback", "savedPosition: $savedPosition")
+                    Log.d("Playback", "elapsedMs: $elapsedTime")
+                    Log.d("Playback", "rewindSeconds: $rewind")
+                    Log.d("Playback", "resumePos: ${maxOf(savedPosition - rewind)}")
+
+                    play(this@apply, maxOf(0, savedPosition - rewind))
                 } else {
                     play(this@apply)
                     Thread {
@@ -256,6 +274,7 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                     getSharedPreferences("playback_positions", MODE_PRIVATE)
                         .edit()
                         .putInt("book_${currentBook.book_id}", currentProgress)
+                        .putLong("book_${currentBook.book_id}_time", System.currentTimeMillis())
                         .apply()
                 }
                 stopService(bookServiceIntent)
