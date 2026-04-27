@@ -209,8 +209,29 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
     override fun playBook() {
         bookViewModel.getSelectedBook()?.value?.apply {
             mediaControllerBinder?.run {
+
+                if(isPlaying) {
+                    bookViewModel.getPlayingBook()?.value?.let { currentBook ->
+                        getSharedPreferences("playback_positions", MODE_PRIVATE)
+                            .edit()
+                            .putInt("book_${currentBook.book_id}", progress)
+                            .apply()
+                    }
+                }
+
                 bookViewModel.setBookPlayed(false)
-                play(this@apply)
+                val file = java.io.File(filesDir, "book_${book_id}.mp3")
+
+                if(file.exists()) {
+                    bookFile = file
+                    val savedPosition = getSharedPreferences("playback_positions", MODE_PRIVATE)
+                        .getInt("book_${book_id}", 0)
+                    play(this@apply, savedPosition)
+                } else {
+                    play(this@apply)
+                    downloadBook(this@MainActivity, this@apply)
+                }
+
 
                 // Start service to ensure it keeps playing even if the activity is destroyed
                 startService(bookServiceIntent)
@@ -220,8 +241,11 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
 
     override fun pauseBook() {
         mediaControllerBinder?.run {
-            if (isPlaying) stopService(bookServiceIntent)
-            else startService(bookServiceIntent)
+            if (isPlaying) {
+                stopService(bookServiceIntent)
+            } else {
+                startService(bookServiceIntent)
+            }
             pause()
         }
     }
