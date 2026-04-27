@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
 
     private lateinit var progressSeekBar: SeekBar
     lateinit var bookServiceIntent: Intent
+    var currentProgress: Int = 0
+
 
     var mediaControllerBinder: AudioBookPlayerService.MediaControlBinder? = null
 
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                 bookViewModel.setSelectedBook(book as Book)
             }
 
+            currentProgress = progress // store current
             // Update seekbar with progress of current book as a percentage
             progressSeekBar.progress = ((progress.toFloat() / (book as Book).duration) * 100).toInt()
         }
@@ -214,7 +217,7 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                     bookViewModel.getPlayingBook()?.value?.let { currentBook ->
                         getSharedPreferences("playback_positions", MODE_PRIVATE)
                             .edit()
-                            .putInt("book_${currentBook.book_id}", progress)
+                            .putInt("book_${currentBook.book_id}", currentProgress)
                             .apply()
                     }
                 }
@@ -229,7 +232,14 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                     play(this@apply, savedPosition)
                 } else {
                     play(this@apply)
-                    downloadBook(this@MainActivity, this@apply)
+                    Thread {
+                        try {
+                            val readBytes = java.net.URL("https://kamorris.com/lab/oneplayer/downloadbook.php?id=${book_id}").readBytes()
+                            val downloadedFile = java.io.File(filesDir, "book_${book_id}.mp3")
+                            downloadedFile.writeBytes(readBytes)
+                            runOnUiThread { bookFile = downloadedFile }
+                        } catch (e: Exception ){ }
+                    }.start()
                 }
 
 
@@ -245,7 +255,7 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
                 bookViewModel.getPlayingBook()?.value?.let { currentBook ->
                     getSharedPreferences("playback_positions", MODE_PRIVATE)
                         .edit()
-                        .putInt("book_${currentBook.book_id}", progress)
+                        .putInt("book_${currentBook.book_id}", currentProgress)
                         .apply()
                 }
                 stopService(bookServiceIntent)
@@ -260,4 +270,5 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
         unbindService(bookServiceConnection)
         super.onDestroy()
     }
+
 }
