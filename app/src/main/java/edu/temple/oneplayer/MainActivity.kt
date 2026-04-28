@@ -180,6 +180,12 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
 
         bookServiceIntent = Intent(this, AudioBookPlayerService::class.java)
 
+        // store search
+        getSharedPreferences("search_cache", MODE_PRIVATE)
+            .getString("last_results", null)?.let {
+                bookViewModel.updateBooks(org.json.JSONArray(it))
+            }
+
         // Bind in order to send commands
         bindService(bookServiceIntent, bookServiceConnection, BIND_AUTO_CREATE)
     }
@@ -204,8 +210,17 @@ class MainActivity : AppCompatActivity(), BookControlFragment.BookControlInterfa
     private fun searchBooks(searchTerm: String) {
         requestQueue.add(
             JsonArrayRequest(searchURL + searchTerm,
-                { bookViewModel.updateBooks(it) },
-                { Toast.makeText(this, it.networkResponse.toString(), Toast.LENGTH_SHORT).show() })
+                {
+                    bookViewModel.updateBooks(it)
+                    getSharedPreferences("search_cache", MODE_PRIVATE)
+                        .edit()
+                        .putString("last_results", it.toString())
+                        .apply()
+                },
+                {
+                    Toast.makeText(this, it.message ?: "Search failed", Toast.LENGTH_SHORT).show()
+                }
+            )
         )
     }
 
