@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Dessert App</string>
+    <string-array name="flavor_array">
+        <item>Original</item>
+        <item>Fresh Strawberry</item>
+        <item>Chocolate Caramelicious Cheesecake</item>
+        <item>Pineapple Upside-Down</item>
+        <item>Celebration</item>
+        <item>Caramel Apple</item>
+        <item>Very Cherry Ghirardelli® Chocolate</item>
+        <item>Low-Licious</item>
+        <item>Cinnabon® Cinnamon Swirl</item>
+        <item>Godiva® Chocolate</item>
+        <item>Coconut Cream Pie</item>
+        <item>Salted Caramel</item>
+    </string-array>
+
+    <string name="Heading1">Selector</string>
+    <string name="Heading2">Display-er</string>
+    <string name="backBtn">&lt; BACK</string>
+    <string name="textView">TextView</string>
+
+</resources>
+
