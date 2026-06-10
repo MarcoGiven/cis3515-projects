@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">FancyScreen</string>
+
+    <string name="name">Name</string>
+    <string name="emailLabel">Email</string>
+    <string name="extensionLabel">Extension</string>
+    <string name="departmentLabel">Department</string>
+    <string name="supervisorLabel">Supervisor</string>
+    <string name="directReportsLabel">Direct Reports</string>
+
+    <string name="emp_name1">Michelle Townsend</string>
+    <string name="email">mt@ourcompany.com</string>
+    <string name="extension">2253</string>
+    <string name="department">Desgin</string>
+    <string name="supervisor">Gail Davers</string>
+
+    <string name="dirReports1">Kate Sacloff</string>
+    <string name="dirReports2">Andrew Klein</string>
+    <string name="dirReports3">Maria Ortega</string>
+    <string name="dirReports4">Brent Stevenson</string>
+    <string name="dirReports5">Daniel Cho</string>
+    <string name="dirReports6">Jorge Gomez</string>
+
+
+</resources>
