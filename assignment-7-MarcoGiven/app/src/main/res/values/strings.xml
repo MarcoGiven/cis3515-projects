@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">OnePlayer</string>
+
+
+    <string-array name="book_titles">
+        <item>Dune</item>
+        <item>Dune Messiah</item>
+        <item>Children of Dune</item>
+        <item>God Emperor of Dune</item>
+        <item>Heretics of Dune</item>
+        <item>Chapterhouse: Dune</item>
+        <item>Ender\'s Game</item>
+        <item>Speaker for the Dead</item>
+        <item>Xenocide</item>
+        <item>Children of the Mind</item>
+    </string-array>
+    <string-array name="book_authors">
+        <item>Frank Herbert</item>
+        <item>Frank Herbert</item>
+        <item>Frank Herbert</item>
+        <item>Frank Herbert</item>
+        <item>Frank Herbert</item>
+        <item>Frank Herbert</item>
+        <item>Orson Scott Card</item>
+        <item>Orson Scott Card</item>
+        <item>Orson Scott Card</item>
+        <item>Orson Scott Card</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
