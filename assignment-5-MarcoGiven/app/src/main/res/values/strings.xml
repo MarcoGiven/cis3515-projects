@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Image Selector</string>
+
+
+    <string name="movie1">Anemone</string>
+    <string name="movie2">Phantom Thread</string>
+    <string name="movie3">Lincoln</string>
+    <string name="movie4">Nine</string>
+    <string name="movie5">There Will Be Blood</string>
+    <string name="movie6">The Ballad of Jack and Rose</string>
+    <string name="movie7">Gangs of New York</string>
+    <string name="movie8">The Boxer</string>
+    <string name="movie9">The Crucible</string>
+    <string name="movie10">In the Name of the Father</string>
+    <string name="movie11">The Age of Innocence</string>
+    <string name="movie12">The Last of the Mohicans</string>
+    <string name="movie13">Eversmile New Jersey</string>
+    <string name="movie14">My Left Foot</string>
+    <string name="movie15">Stars and Bars</string>
+    <string name="movie16">The Unbearable Lightness of Being</string>
+    <string name="movie17">Nanou</string>
+    <string name="movie18">Screen Two</string>
+    <string name="movie19">A Room with a View</string>
+    <string name="movie20">My Brother Jonathan</string>
+</resources>
